@@ -11,8 +11,7 @@ class driver extends conectarDB{
 		$sentencia=$this->conn_db->prepare($sql);						
 		$sentencia->execute();			
 		$resultados = $sentencia->fetchAll(PDO::FETCH_ASSOC);			
-		$sentencia->closeCursor();
-		$this->conn_db=null;			
+		$sentencia->closeCursor();			
 		return $resultados;
 	}	
 
@@ -26,9 +25,9 @@ class driver extends conectarDB{
 		$guardar->bindParam(':cel', $cel);    			 							
 		$guardar->execute();
 		$result = $this->conn_db->lastInsertId();
-		$guardar->closeCursor();
+		$guardar->closeCursor();			
 		return $result;
-		//$this->conn_db=null;			
+		
 	}
 
 	public function modificar_driver($id,$nombre,$apellido,$cc,$nacimiento,$cel){		
@@ -42,9 +41,9 @@ class driver extends conectarDB{
 		$modificar->bindParam(':cel', $cel);    				
 		$modificar->execute();					
 		$result =true;
-		$modificar->closeCursor();
+		$modificar->closeCursor();			
 		return $result;
-		//$this->conn_db=null;				
+		
 	}	
 
 	public function estado_driver($id,$estado){
@@ -54,32 +53,29 @@ class driver extends conectarDB{
 		$modificar->bindParam(':estado', $estado);			
 		$modificar->execute();					
 		$result =true;
-		$modificar->closeCursor();
-		return $result;
-		//$this->conn_db=null;				
+		$modificar->closeCursor();			
+		return $result;		
 	}
 
 	public function detalle_driver($id){
-		$sql="select * from TDriver where nDriverID = :id";
+		$sql="select * from tDriver where nDriverID = :id";
 		$sentencia = $this->conn_db->prepare($sql);			
 		$sentencia->bindParam(':id', $id);		
 		$sentencia->execute();
 		$resultados = $sentencia->fetch(PDO::FETCH_ASSOC);
 		$sentencia->closeCursor();
-		return $resultados;
-		//$this->conn_db = null;
+		return $resultados;		
 	}
-
 	
-	public function detalle_vehiculo($id){
-		$sql="select * from tVehiculo where nDriverFK = :id";
+	public function detalle_vehiculos($id){
+		
+		$sql="select * from tvehiculo where nDriverFK = :id";
 		$sentencia = $this->conn_db->prepare($sql);			
 		$sentencia->bindParam(':id', $id);		
 		$sentencia->execute();
 		$resultados = $sentencia->fetch(PDO::FETCH_ASSOC);
 		$sentencia->closeCursor();
 		return $resultados;
-		//$this->conn_db = null;
 	}
 	public function agregar_vehiculo($placa,$cc,$marca,$modelo,$driver){
 		$query_save="Insert into tVehiculo(cPlaca,cCc,cMarca,cModelo,nDriverFK) value(:placa,:cc,:marca,:modelo,:driver)";
@@ -91,9 +87,8 @@ class driver extends conectarDB{
 		$guardar->bindParam(':driver', $driver);    			 							
 		$guardar->execute();
 		$result = $this->conn_db->lastInsertId();
-		$guardar->closeCursor();
+		$guardar->closeCursor();			
 		return $result;
-		//$this->conn_db=null;			
 	}	
 
 	public function modificar_vehiculo($placa,$cc,$marca,$modelo,$driver){
@@ -106,9 +101,8 @@ class driver extends conectarDB{
 		$modificar->bindParam(':id', $driver);    			 							
 		$modificar->execute();
 		$result =true;
-		$modificar->closeCursor();
-		return $result;
-		//$this->conn_db=null;			
+		$modificar->closeCursor();			
+		return $result;		
 	}
 
 }

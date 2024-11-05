@@ -2,6 +2,7 @@
   require_once 'includes/ti.php';
   require_once 'includes/class_users.php';
   require_once 'includes/class_driver.php';
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,20 +74,20 @@
                 <i class="mdi mdi-home menu-icon"></i>
                 <span class="menu-title">Home</span>
               </a>
-            </li>            
+            </li>        
             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#usuarios" aria-expanded="false" aria-controls="usuarios">
-                <i class=" menu-icon mdi mdi-account-multiple"></i>
-                <span class="menu-title">Usuarios</span><i class="menu-arrow"></i>
+              <a class="nav-link" href="usuarios_lista.php">
+                <i class="mdi mdi-home menu-icon"></i>
+                <span class="menu-title">Usuarios</span>
               </a>
-              <div class="collapse" id="usuarios">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="usuarios_lista.php">Listado</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="usuarios_nuevo.php">Nuevo</a></li>
-                </ul>
-              </div>
-            </li>
-
+            </li>                 
+            <li class="nav-item">
+              <a class="nav-link" href="ajax.php">
+                <i class="mdi mdi-home menu-icon"></i>
+                <span class="menu-title">AJAX</span>
+              </a>
+            </li>  
+            
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#driver" aria-expanded="false" aria-controls="driver">
                 <i class=" menu-icon mdi mdi-account-multiple"></i>
@@ -99,12 +100,12 @@
                   <li class="nav-item"> <a class="nav-link" href="driver_nuevo.php">Nuevo</a></li>
                 </ul>
               </div>
-            </li>            
+            </li>             
           </ul>
         </nav>
         <!-- partial -->
         <div class="main-panel">
-          <div class="content-wrapper">
+          <div class="content-wrapper" style="background: #dfdfdf;">
             
           <?php startblock('article') ?>
 
@@ -151,6 +152,8 @@
     <!-- Custom js for this page-->
     <script src="assets/js/jquery.cookie.js" type="text/javascript"></script>
     <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/jquery.mask.js"></script>
+    <script src="assets/js/jquery.mask1.js"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -160,23 +163,18 @@
     <!-- End custom js for this page-->
     <script>
 
-Swal.fire({
-  title: "Good job!",
-  text: "You clicked the button!",
-  icon: "success"
-});
 
 
-      alert("You clicked the button!");
 
-      function detalleUser(caso,id,nombres,apellidos,cc){
+      
 
+      function detalleUser(caso,id,nombres,apellidos,cc,tipo){
         var txtCaso = $('#inputCaso').val(caso);
         var txtNombres = $('#inputNombres').val(nombres);
         var txtApellidos = $('#inputApellidos').val(apellidos);
         var txtCc = $('#inputCc').val(cc);
         var txtID = $('#inputID').val(id);
-
+        let txtTipo = $('#inputTipo').val(tipo);
         $('#modalForm').modal('show');
 
       }
@@ -202,6 +200,42 @@ Swal.fire({
         });
 
       }
+
+      $(document).ready(function($){    
+    $('.midate').datepicker({format: "yyyy-mm-dd"});
+    $(".numbers").keypress(function (key){
+        window.console.log(key.charCode)
+        if(key.charCode > 31 && (key.charCode < 48 || key.charCode > 57) && (key.charCode != 46))
+            return false;
+    });    
+    $(".letras").keypress(function (key) {            
+        window.console.log(key.charCode)
+          if ((key.charCode < 97 || key.charCode > 122)//letras mayusculas
+            && (key.charCode < 65 || key.charCode > 90) //letras minusculas
+            && (key.charCode != 45) //retroceso
+            && (key.charCode != 241) //ñ  
+            && (key.charCode != 209) //Ñ
+            && (key.charCode != 32) //espacio
+            )
+            return false;
+    }); 
+	$('.cc').mask('0000000000'); 
+	$('.rut').mask('000000000-0');
+	$('.celu').mask('000-000-0000');
+    $('.tele').mask('0-000000');
+    $('.peso').mask('000');
+    $('.alt').mask('0.00');
+	$('.fecha').mask('YYYY-Mm-Dd', {'translation': {
+                                        Y: {pattern: /[0-9]/},
+                                        M: {pattern: /[0-1]/},
+                                        m: {pattern: /[0-9]/}, 	
+                                        D: {pattern: /[0-3]/},
+                                        d: {pattern: /[0-9]/}
+                                      }
+                                });
+});
+
+
     </script>
   </body>
 </html>

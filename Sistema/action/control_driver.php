@@ -1,22 +1,27 @@
 <?php
     require_once '../includes/class_driver.php';    
     $consultar = new driver();
+    function validar($array){
+        $cont = 0;
+        foreach($_POST as $fila){
+            if($fila==null){
+                $cont++;
+            }else if($fila==0){
+                $cont++;
+            }else if($fila==''){
+                $cont++;
+            }
+        }
+        return $cont;
+    }
 
     if(!empty($_POST['caso'])){
 
         $caso = $_POST['caso'];
         switch($caso){
             case '1':
-                if(
-                    (isset($_POST['nombre']) && !empty($_POST['nombre'])) &&
-                    (isset($_POST['apellido']) && !empty($_POST['apellido'])) &&
-                    (isset($_POST['doc']) && !empty($_POST['doc'])) &&
-                    (isset($_POST['cel']) && !empty($_POST['cel'])) &&
-                    (isset($_POST['nacio']) && !empty($_POST['nacio'])) &&
-                    (isset($_POST['placa']) && !empty($_POST['placa'])) &&
-                    (isset($_POST['cc']) && !empty($_POST['cc'])) &&
-                    (isset($_POST['marca']) && !empty($_POST['marca'])) &&
-                    (isset($_POST['modelo']) && !empty($_POST['modelo']))){	
+                $validar =  validar($_POST);
+                if($validar==0){
                 //nuevo
                 //validacion 
                     $nombre = $_POST['nombre'];
@@ -51,18 +56,8 @@
                 }
                 break;
                 case '2':
-                    if(
-                    (isset($_POST['nombre']) && !empty($_POST['nombre'])) &&
-                    (isset($_POST['apellido']) && !empty($_POST['apellido'])) &&
-                    (isset($_POST['doc']) && !empty($_POST['doc'])) &&
-                    (isset($_POST['cel']) && !empty($_POST['cel'])) &&
-                    (isset($_POST['nacio']) && !empty($_POST['nacio'])) &&
-                    (isset($_POST['placa']) && !empty($_POST['placa'])) &&
-                    (isset($_POST['cc']) && !empty($_POST['cc'])) &&
-                    (isset($_POST['marca']) && !empty($_POST['marca'])) &&
-                    (isset($_POST['modelo']) && !empty($_POST['modelo'])) &&
-                    (isset($_POST['id']) && !empty($_POST['id'])) 
-                    ){
+                    $validar =  validar($_POST);
+                    if($validar==0){
                         $nombre = $_POST['nombre'];
                         $apellido = $_POST['apellido'];
                         $doc = $_POST['doc'];
@@ -87,7 +82,7 @@
                     }else{
                         echo'<script type="text/javascript">
                         alert("Todos los campos son requeridos");
-                        window.location.href="../driver_nuevo.php";
+                        window.location.href="../driver_editar.php?ID='.$_POST['id'].'";
                         </script>';                          
                     }	                    
 
