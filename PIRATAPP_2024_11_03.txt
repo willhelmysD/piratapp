@@ -1,0 +1,96 @@
+drop database DBpirataApp;
+create database if not exists DBpirataApp CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+use DBpirataApp;
+create table if not exists TTipo(
+	nTipoID int auto_increment not null,
+    ctipo varchar(45) not null,
+    primary key(nTipoID)
+)engine=INNODB;
+create table if not exists TUsers(
+	nUserID int auto_increment not null,
+	cNombre varchar(35) not null,
+    cApellido varchar(35) not null,
+    cCc varchar(10) not null unique,
+    lEstado boolean default 1,
+    dCreacion date default(NOW()),
+    nTipoID int not null,
+    primary key(nUserID),
+    foreign key(nTipoID) references TTipo(nTipoID) 
+)engine=INNODB;
+
+create table if not exists TLogin(
+	nLoginID int auto_increment not null,
+    cUser varchar(20) not null unique,
+    cPassword varchar(256) not null,
+    lEstado boolean default 1,
+    nUserID int not null,
+    primary key(nLoginID),
+    foreign key(nUserID) references TUsers(nUserID) 
+)engine=INNODB;
+
+create table if not exists tDriver(
+	nDriverID int not null auto_increment,
+    cNombre varchar(45) not null,
+    cApellido varchar(45) not null,
+    cCc varchar(10) not null,
+    dNacimiento date,
+    cCel varchar(45),
+    lEstado tinyInt default 1,
+    primary key(nDriverID)    
+)engine=INNODB;
+
+create table if not exists tvehiculo(
+	nVehiculoID int not null auto_increment,
+    cPlaca varchar(10) not null,
+    cCc varchar(10)not null,
+    cMarca varchar(45) not null,
+    cModelo varchar(10) not null,
+    nDriverFK int not null,
+    primary key(nVehiculoID),
+    foreign key(nDriverFK) references tDriver(nDriverID)    
+)engine=INNODB;
+
+
+insert into TTipo (cTipo) value
+('Admin'),
+('guest'),
+('operador');
+
+insert into TUsers (cNombre,cApellido,cCc,nTipoID) value
+('will','duran','1000',1),
+('oscar','rojas','2000',1),
+('mayra','calderon','3000',2),
+('angela','caldero','4000',3);
+
+create view vDrivers(codigo, nombre, apellido, cc , estado, marca, modelo) as
+select 
+	d.nDriverID,
+    d.cNombre,
+    d.cApellido,
+    d.cCc,
+    d.lEstado,
+    v.cMarca,
+    v.cModelo
+    from tDriver as d
+    inner join tvehiculo v on d.nDriverID = v.nDriverFK;
+    
+create view vUsers(codigo, nombres, apellidos, cc ,tipo) as
+select 
+	nUserID,
+    cNombre,
+    cApellido,
+    cCc,
+    (select cTipo from TTipo as t where t.nTipoID = u.nTipoID)  
+    from TUsers as u;    
+    
+    drop view if exists vUsers;
+create view vUsers(codigo, nombres, apellidos, cc ,tipoID,tipo,estado) as
+select 
+	nUserID,
+    cNombre,
+    cApellido,
+    cCc,
+    nTipoID,
+    (select cTipo from TTipo as t where t.nTipoID = u.nTipoID),
+    lEstado                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+    from TUsers as u; 
