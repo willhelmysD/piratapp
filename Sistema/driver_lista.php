@@ -54,9 +54,9 @@
                             <td><?php echo $item['modelo']?></td>
                             <td>
                               <?php if($item['estado']==1){ ?>
-                                  <label class="btn btn-outline-danger btn-sm" onclick="estadoDriver(3,'<?php echo $item['codigo']?>',0)">Cambiar Estado</label>
+                                  <label class="btn btn-outline-danger btn-sm" onclick="estadoDriver(3,'<?php echo $item['codigo']?>',0)">Desactivar</label>
                               <?php }else{ ?>
-                              <label class="btn btn-outline-success btn-sm" onclick="estadoDriver(3,'<?php echo $item['codigo']?>',1)">Cambiar Estado</label>
+                              <label class="btn btn-outline-success btn-sm" onclick="estadoDriver(3,'<?php echo $item['codigo']?>',1)">Activar</label>
                                 <?php } ?>
                                 <a class="btn btn-outline-info btn-sm btn-sm" href="driver_editar.php?ID=<?php echo $item['codigo']?>">Editar Perfil</a>
 

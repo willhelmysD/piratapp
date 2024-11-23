@@ -2,6 +2,7 @@
 	include 'plantilla.html'; 
     $consultar = new users();
     $array_user = $consultar->listar_user();    
+    var_dump($array_user);
 ?>
 <?php startblock('article') ?>
 <div class="row">
@@ -57,7 +58,7 @@
                               <?php }else{ ?>
                               <label class="btn btn-outline-success btn-xs" onclick="estadoDriver(3,'<?php echo $item['codigo']?>',1)">Estado</label>
                                 <?php } ?>
-                                <a class="btn btn-outline-info btn-sm btn-xs" onclick="ver_perfil(<?php echo $item['codigo']?>)">Perfil</a>
+                                <a href="#" class="btn btn-outline-info btn-sm btn-xs" onclick="ver_perfil(<?php echo $item['codigo']?>)">Perfil</a>
                             </td>
                         </tr>
                         <?php 
@@ -186,8 +187,8 @@
             processData: false
         }).done(function(data){
             $('#spinner').css('display','none');
-            //
             alert(data);            
+            location.reload();
         });        
     }
 </script>

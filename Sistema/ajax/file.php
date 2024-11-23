@@ -1,6 +1,8 @@
 <?php 
 if(isset($_FILES)){
+  echo $id = 5;
   var_dump($_FILES);
+  echo $img = "perfil_$id.png";
 }
 $phpFileUploadErrors = array(
     0 => 'There is no error, the file uploaded with success',

@@ -23,9 +23,7 @@ create table if not exists TLogin(
     cUser varchar(20) not null unique,
     cPassword varchar(256) not null,
     lEstado boolean default 1,
-    nUserID int not null,
-    primary key(nLoginID),
-    foreign key(nUserID) references TUsers(nUserID) 
+    primary key(nLoginID)
 )engine=INNODB;
 
 create table if not exists tDriver(
@@ -64,7 +62,7 @@ insert into TUsers (cNombre,cApellido,cCc,nTipoID) value
 
 create view vDrivers(codigo, nombre, apellido, cc , estado, marca, modelo) as
 select 
-	d.nDriverID,
+ d.nDriverID,
     d.cNombre,
     d.cApellido,
     d.cCc,
